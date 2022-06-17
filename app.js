@@ -204,6 +204,7 @@ function showMovieDetails (id, keywords) {
 
   })
   .catch(function (error) {
+    clearLocalStorageAndArrays()
     errorSection.innerHTML += `
       <div class="not-found-div">
       <img 
@@ -211,7 +212,9 @@ function showMovieDetails (id, keywords) {
       src="images/404 Movies Not Found.png" />
       </div>
       `
-      inputMovieSearch.value = ''
+    inputMovieSearch.value = ''
+ 
+
     console.log(error);
   })
 }

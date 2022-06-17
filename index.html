@@ -8,7 +8,50 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Movie Search</h1>
+
+    <h1 class="fascinate-font">Movie Search</h1>
+    <section 
+        class="search-section"
+        id="search-section"
+    >
+
+    <input
+        type="search"
+        name="movie-search-input" id="movie-search-input"
+        class="movie-search-input"
+        onfocus="this.value=''"
+        placeholder="Enter a Movie or Keyword"
+    >
+    <button
+         type="submit"
+         id="search-btn"
+         class="red-btn"
+         >
+         Search
+    </button>
+    </section>
+    <section 
+        class="show-movies-section" 
+        id="show-movies-section">
+    </section>
+    <section id="error-section"></section>
+    <section
+    id="details-section"
+    class="details-section"
+    ></section>
+    <div 
+        class="page-btn-div hide"
+        id="next-page-btn-div"
+    >
+        <button
+        type="submit"
+        id="next-page-btn"
+        class="red-btn"
+        >
+         Next page
+        </button>
+    </div>
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
 </body>

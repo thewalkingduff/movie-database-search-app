@@ -180,6 +180,7 @@ function getPosterHTML(photo, keywords) {
 function showMovieDetails (id, keywords) {
   clearSections()
   nextPageBtn.classList.add('hide')
+  prevPageBtn.classList.add('hide')
   searchSection.classList.add('hide')
 
   axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=48631af2fa021659c6c1b373a03a59e6&language=en-US`)

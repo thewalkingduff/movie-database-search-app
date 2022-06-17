@@ -13,6 +13,7 @@ let resultsArray = []
 let dataForOneMovie = []
 let genres = []
 
+let inputMovieSearchValue
 let pageNumber = 1
 
 function clearSections () {
@@ -223,8 +224,11 @@ function goBackToMovieResults (inputMovieSearchValue) {
 }
 
 function getMovies () {
+  if(inputMovieSearch !== inputMovieSearchValue){
+    clearLocalStorageAndArrays()
+  }
   localStorage.setItem('inputMovieSearchValue', inputMovieSearch.value) 
-  let inputMovieSearchValue = localStorage.getItem('inputMovieSearchValue')
+  inputMovieSearchValue = localStorage.getItem('inputMovieSearchValue')
     clearSections()
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=48631af2fa021659c6c1b373a03a59e6&page=${pageNumber}&query=${inputMovieSearchValue}`)
   .then(function (response) {
@@ -232,6 +236,7 @@ function getMovies () {
       localStorage.setItem('resultsArray', JSON.stringify(response.data.results))
       resultsArrayFromLocalStorage = JSON.parse(localStorage.getItem('resultsArray'))
       resultsArray = resultsArrayFromLocalStorage
+      console.log(response.data.results.length);
    
       displayMovies(inputMovieSearchValue)
 
@@ -239,7 +244,8 @@ function getMovies () {
     
   })
   .catch(function (error) {
-    errorSection.innerHTML += `
+    if(resultsArray.length === 0){
+      errorSection.innerHTML += `
       <div class="not-found-div">
       <img 
       class="image404"
@@ -249,7 +255,9 @@ function getMovies () {
       inputMovieSearch.value = ''
       nextPageBtn.classList.add('hide')
       prevPageBtn.classList.add('hide')
-    console.log(error);
+      console.log(error);
+    }
+    
   })
 }
   

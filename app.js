@@ -5,8 +5,9 @@ const errorSection = document.querySelector('#error-section')
 const searchSection = document.querySelector('#search-section')
 const movieDiv = document.querySelector('#movie-div')
 const detailsSection = document.querySelector('#details-section')
-const nextPageBtn = document.querySelector('#next-page-btn')
 const nextPageBtnDiv = document.querySelector('#next-page-btn-div')
+const nextPageBtn = document.querySelector('#next-page-btn')
+const prevPageBtn = document.querySelector('#prev-page-btn')
 
 let resultsArray = []
 let dataForOneMovie = []
@@ -27,6 +28,14 @@ function clearLocalStorageAndArrays() {
 }
 
 function displayMovies(searchWords) {
+  if(pageNumber > 1) {
+    prevPageBtn.classList.remove('hide')
+    nextPageBtnDiv.classList.remove('next-page-btn-div-center')
+    nextPageBtnDiv.classList.add('next-page-btn-div-right')
+  }
+  if(!pageNumber > 1){
+    prevPageBtn.classList.add('hide')
+  }
     for(let i = 0; i < 20; i++){
       if(resultsArray[i].poster_path){
         let id = resultsArray[i].id
@@ -169,7 +178,7 @@ function getPosterHTML(photo, keywords) {
 
 function showMovieDetails (id, keywords) {
   clearSections()
-  nextPageBtnDiv.classList.add('hide')
+  nextPageBtn.classList.add('hide')
   searchSection.classList.add('hide')
 
   axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=48631af2fa021659c6c1b373a03a59e6&language=en-US`)
@@ -209,7 +218,7 @@ function showMovieDetails (id, keywords) {
 function goBackToMovieResults (inputMovieSearchValue) {
   clearSections() 
   displayMovies(inputMovieSearchValue)
-  nextPageBtnDiv.classList.remove('hide')
+  nextPageBtn.classList.remove('hide')
   searchSection.classList.remove('hide')
 }
 
@@ -226,7 +235,7 @@ function getMovies () {
    
       displayMovies(inputMovieSearchValue)
 
-      nextPageBtnDiv.classList.remove('hide')
+      nextPageBtn.classList.remove('hide')
     
   })
   .catch(function (error) {
@@ -238,7 +247,8 @@ function getMovies () {
       </div>
       `
       inputMovieSearch.value = ''
-      nextPageBtnDiv.classList.add('hide')
+      nextPageBtn.classList.add('hide')
+      prevPageBtn.classList.add('hide')
     console.log(error);
   })
 }
@@ -257,7 +267,10 @@ nextPageBtn.addEventListener('click', () => {
   getMovies()
 })
 
-
+prevPageBtn.addEventListener('click', () => {
+  pageNumber--
+  getMovies()
+})
 
 
 
